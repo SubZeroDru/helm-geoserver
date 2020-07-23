@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "geoserver.fullname" . }}
+  labels:
+    {{- include "geoserver.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "geoserver.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "geoserver.selectorLabels" . | nindent 8 }}
+    spec:
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: geoserver-data-claim
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "geoserver.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: CATALINA_OPTS
+            value: "-Xms4096m -Xmx4096m -XX:NewSize=256m -XX:PermSize=256m -XX:MaxPermSize=256m  -XX:+DisableExplicitGC"
+          - name: command
+            value: "/usr/local/tomcat/bin/./startup.sh"
+          ports:
+            - name: main
+              containerPort: 8080
+              protocol: TCP
+
+          volumeMounts:
+            - mountPath: "/opt/geoserver/data_dir"
+              name: data
+
+ #         livenessProbe:
+ #           httpGet:
+ #             path: /
+ #             port: 80
+ #         readinessProbe:
+ #           httpGet:
+ #             path: /
+ #             port: 80
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

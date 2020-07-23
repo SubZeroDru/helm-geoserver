@@ -1,0 +1,35 @@
+geoserver:
+  name: geoserver
+replicaCount: 1
+image:
+  repository: subzero85/geoserver
+  pullPolicy: IfNotPresent
+  tag: '2.15.0'
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+serviceAccount:
+  create: true
+  name: geoserver
+securityContext: {}
+service:
+  type: NodePort
+  port: 8080
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: 
+      paths: []
+  tls: []
+resources: 
+ limits:
+  cpu: 500m
+  memory: 3Gi
+ requests:
+  cpu: 500m
+  memory: 3Gi
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

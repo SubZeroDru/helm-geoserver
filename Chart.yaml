@@ -1,0 +1,7 @@
+apiVersion: v2
+owner: Michael Drupevsky
+name: geoserver
+description: A Helm chart for Service geoserver
+type: application
+version: 0.1.0
+appVersion: 1.16.0

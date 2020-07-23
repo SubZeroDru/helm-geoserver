@@ -1,6 +1,6 @@
 # Non Root Geoserver helm chart  with ECW and Mrsid
 
-![alt text](https://pbs.twimg.com/profile_images/1194637392436531201/ZwpNBdmL_400x400.jpg) ![alt text](https://www.osgeo.org/wp-content/uploads/GeoServer.png)
+![alt text](https://helm.sh/img/helm.svg) ![alt text](https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSOKNHmnI2krYUku6azeTdwLbdlwNBfZ-FUng&usqp=CAU)
 
 
 

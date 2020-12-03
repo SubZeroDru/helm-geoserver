@@ -15,7 +15,7 @@ This chart includes the following features:
   - Non root operation
   - NFS based storageClass volume claim
   - Included test pod yaml
-Docker Image by kartoza/geoserver
+  - Docker Image by kartoza/geoserver
 
 ### Installation
 $ helm install geoserver . 
